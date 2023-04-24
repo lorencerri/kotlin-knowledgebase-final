@@ -1,9 +1,10 @@
-package com.cerri.knowledgebasefinal
+package com.cerri.knowledgebasefinal.presentation.documents_screen
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cerri.knowledgebasefinal.Document
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
