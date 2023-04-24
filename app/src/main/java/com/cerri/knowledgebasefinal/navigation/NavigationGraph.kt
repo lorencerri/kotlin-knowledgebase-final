@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cerri.knowledgebasefinal.presentation.documents_screen.DocumentsScreen
+import com.cerri.knowledgebasefinal.presentation.documents_screen.NewDocumentScreen
 
 @Composable
 fun NavigationGraph(
@@ -16,7 +17,10 @@ fun NavigationGraph(
         startDestination = Screens.DocumentsScreen.route
     ) {
         composable(route = Screens.DocumentsScreen.route) {
-            DocumentsScreen()
+            DocumentsScreen(navController)
+        }
+        composable(route = Screens.NewDocumentScreen.route) {
+            NewDocumentScreen(navController)
         }
     }
 }
