@@ -1,34 +1,39 @@
-package com.cerri.knowledgebasefinal.presentation.documents_screen
+package com.cerri.knowledgebasefinal
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cerri.knowledgebasefinal.Document
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
-class DocumentsViewModel : ViewModel() {
-    val state = mutableStateOf<List<Document>>(emptyList())
+class SupabaseViewModel : ViewModel() {
+    val documents = mutableStateOf<List<Document>>(emptyList())
 
     init {
-        getData()
+        getDocuments()
     }
 
-    private fun getData() {
+    suspend fun createDocument(title: String, description: String) {
+        val client = getClient()
+        client.postgrest["documents"].insert(
+            Document(
+                title = title,
+                description = description
+            )
+        )
+    }
+
+    private fun getDocuments() {
         viewModelScope.launch {
-            state.value = getDataFromSupabase()
-            Log.d("DataViewModel", "state.value: ${state.value}")
+            documents.value = getDocumentsFromSupabase()
         }
     }
 }
 
-suspend
-
-fun getDataFromSupabase(): List<Document> {
+suspend fun getDocumentsFromSupabase(): List<Document> {
     val client = getClient()
     val supabaseResponse = client.postgrest["documents"].select()
     return supabaseResponse.decodeList<Document>()

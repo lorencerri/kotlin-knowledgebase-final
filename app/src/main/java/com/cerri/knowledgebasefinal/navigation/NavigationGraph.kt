@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cerri.knowledgebasefinal.presentation.documents_screen.DocumentsScreen
-import com.cerri.knowledgebasefinal.presentation.documents_screen.NewDocumentScreen
+import com.cerri.knowledgebasefinal.screens.DocumentsScreen
+import com.cerri.knowledgebasefinal.screens.NewDocumentScreen
 
 @Composable
 fun NavigationGraph(
