@@ -10,7 +10,7 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
-class DataViewModel : ViewModel() {
+class DocumentsViewModel : ViewModel() {
     val state = mutableStateOf<List<Document>>(emptyList())
 
     init {

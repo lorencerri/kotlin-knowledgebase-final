@@ -1,5 +1,5 @@
 package com.cerri.knowledgebasefinal
 
 sealed class Screens(val route: String) {
-    object DataScreen : Screens(route = "Data_Screen")
+    object DocumentsScreen : Screens(route = "Documents_Screen")
 }

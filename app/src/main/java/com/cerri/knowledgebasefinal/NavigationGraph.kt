@@ -12,10 +12,10 @@ fun NavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.DataScreen.route
+        startDestination = Screens.DocumentsScreen.route
     ) {
-        composable(route = Screens.DataScreen.route) {
-            DataScreen()
+        composable(route = Screens.DocumentsScreen.route) {
+            DocumentsScreen()
         }
     }
 }
