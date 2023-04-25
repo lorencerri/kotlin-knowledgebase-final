@@ -5,5 +5,6 @@ data class Document(
     val id: Int = 0,
     val created_at: String = "",
     val title: String = "",
-    val description: String = ""
+    val description: String = "",
+    val author_id: String = ""
 )

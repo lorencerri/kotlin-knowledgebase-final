@@ -6,9 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cerri.knowledgebasefinal.ApplicationViewModel
-import com.cerri.knowledgebasefinal.screens.AccountScreen
-import com.cerri.knowledgebasefinal.screens.DocumentsScreen
-import com.cerri.knowledgebasefinal.screens.NewDocumentScreen
+import com.cerri.knowledgebasefinal.screens.*
 
 @Composable
 fun NavigationGraph(
@@ -27,6 +25,12 @@ fun NavigationGraph(
         }
         composable(route = Screens.AccountScreen.route) {
             AccountScreen(navController, applicationViewModel)
+        }
+        composable(route = Screens.SignUpScreen.route) {
+            SignUpScreen(navController, applicationViewModel)
+        }
+        composable(route = Screens.SignInScreen.route) {
+            SignInScreen(navController, applicationViewModel)
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.cerri.knowledgebasefinal
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue
+import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.realtime.Realtime
@@ -17,6 +19,21 @@ open class SupabaseViewModel : ViewModel() {
 
     init {
         getDocuments()
+    }
+
+    suspend fun getUserOrNull(): User? {
+        runCatching {
+            client.gotrue.retrieveUserForCurrentSession()
+        }.onFailure {
+            return null
+        }.onSuccess {
+            val supabaseResponse = client.postgrest["users"].select(single = true) {
+                User::email eq it.email
+            }
+            Log.d("SupabaseViewModel", supabaseResponse.toString())
+            return supabaseResponse.decodeAs<User>()
+        }
+        return null
     }
 
     suspend fun createDocument(title: String, description: String) {
