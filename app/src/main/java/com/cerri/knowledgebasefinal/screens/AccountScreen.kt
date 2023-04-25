@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.User
 import com.cerri.knowledgebasefinal.components.Header
+import com.cerri.knowledgebasefinal.components.LoadingIndicator
 import io.github.jan.supabase.gotrue.gotrue
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.coroutineScope
@@ -27,12 +28,8 @@ fun AccountScreen(
     applicationViewModel: ApplicationViewModel,
 ) {
 
-    var emailVal by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+    var usernameVal by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue("", TextRange(0, 7)))
-    }
-
-    var passwordVal by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue("@username", TextRange(0, 7)))
     }
 
     var userVal by remember { mutableStateOf<User?>(null) }
@@ -43,61 +40,87 @@ fun AccountScreen(
             navController.navigate("Sign_In_Screen")
         } else {
             userVal = user
+            usernameVal = TextFieldValue(user.username, TextRange(0, user.username.length))
         }
     }
 
-    Scaffold(topBar = { Header("Account", navController) }) {
-
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.CenterVertically
-            ),
-        ) {
-            Text("Hello, ${userVal?.username}!", fontSize = 32.sp)
-            Text("You're currently signed in.")
-        }
-
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.CenterVertically
-            ),
-        ) {
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+    if (userVal == null) LoadingIndicator()
+    else {
+        Scaffold(topBar = { Header("Account", navController) }) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterVertically
+                ),
             ) {
-                TextButton(onClick = {
-                    navController.navigate("Documents_Screen")
-                }) {
-                    Text("Back")
-                }
+                Text("Hello, ${userVal?.username}!", fontSize = 32.sp)
+                Text("You can change your personal information below.")
+            }
 
-                Button(onClick = {
-                    val scope = MainScope()
 
-                    scope.launch {
-                        coroutineScope {
-                            applicationViewModel.client.gotrue.invalidateSession()
-                            navController.navigate("Sign_In_Screen")
-                        }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 16.dp,
+                    alignment = Alignment.CenterVertically
+                ),
+            ) {
+
+                OutlinedTextField(
+                    value = usernameVal,
+                    onValueChange = { usernameVal = it },
+                    label = { Text("Username") }
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    TextButton(onClick = {
+                        navController.navigate("Documents_Screen")
+                    }) {
+                        Text("Back")
                     }
 
-                }) {
+                    Button(onClick = {
+                        val scope = MainScope()
+
+                        scope.launch {
+                            coroutineScope {
+                                applicationViewModel.updateUsername(usernameVal.text)
+                                navController.navigate("Account_Screen")
+                            }
+                        }
+
+                    }) {
+                        Text("Update")
+                    }
+                }
+
+                Divider(modifier = Modifier.padding(24.dp))
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 96.dp, end = 96.dp),
+                    onClick = {
+                        val scope = MainScope()
+
+                        scope.launch {
+                            coroutineScope {
+                                applicationViewModel.client.gotrue.invalidateSession()
+                                navController.navigate("Sign_In_Screen")
+                            }
+                        }
+
+                    }) {
                     Text("Logout")
                 }
+
             }
         }
     }

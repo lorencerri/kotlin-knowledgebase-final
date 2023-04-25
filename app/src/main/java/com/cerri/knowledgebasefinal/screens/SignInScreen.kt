@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,7 +78,8 @@ fun SignInScreen(
             OutlinedTextField(
                 value = passwordVal,
                 onValueChange = { passwordVal = it },
-                label = { Text("Password") }
+                label = { Text("Password") },
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Row(
@@ -105,7 +107,7 @@ fun SignInScreen(
                                 scaffoldState.snackbarHostState.showSnackbar("Unable to login, incorrect email or password?")
                             }
                                 .onSuccess {
-                                    navController.navigate("Documents_Screen")
+                                    navController.navigate("Account_Screen")
                                 }
                         }
                     }
@@ -113,6 +115,22 @@ fun SignInScreen(
                 }) {
                     Text("Sign In")
                 }
+
+
+            }
+
+            Divider(modifier = Modifier.padding(24.dp))
+
+            Text("Need an account?", fontSize = 28.sp)
+
+            TextButton(
+                onClick = {
+                    navController.navigate("Sign_Up_Screen")
+                }, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 96.dp, end = 96.dp)
+            ) {
+                Text("Create Account")
             }
 
         }

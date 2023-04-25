@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -88,7 +89,8 @@ fun SignUpScreen(
             OutlinedTextField(
                 value = passwordVal,
                 onValueChange = { passwordVal = it },
-                label = { Text("Password") }
+                label = { Text("Password") },
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Row(
@@ -96,7 +98,7 @@ fun SignUpScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 TextButton(onClick = {
-                    navController.navigate("Documents_Screen")
+                    navController.navigate("Sign_In_Screen")
                 }) {
                     Text("Back")
                 }

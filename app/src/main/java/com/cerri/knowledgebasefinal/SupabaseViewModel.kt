@@ -36,6 +36,14 @@ open class SupabaseViewModel : ViewModel() {
         return null
     }
 
+    suspend fun updateUsername(username: String) {
+        val user = client.gotrue.retrieveUserForCurrentSession()
+        client.postgrest["users"].update({ User::username setTo username })
+        {
+            User::email eq user.email
+        }
+    }
+
     suspend fun createDocument(title: String, description: String) {
         client.postgrest["documents"].insert(
             Document(
