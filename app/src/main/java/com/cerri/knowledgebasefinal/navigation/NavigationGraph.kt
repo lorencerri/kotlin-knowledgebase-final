@@ -32,5 +32,8 @@ fun NavigationGraph(
         composable(route = Screens.SignInScreen.route) {
             SignInScreen(navController, applicationViewModel)
         }
+        composable(route = Screens.DocumentScreen.route) {
+            DocumentScreen(navController, applicationViewModel)
+        }
     }
 }

@@ -10,15 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun Header(title: String, navController: NavController) {
+fun Header(title: String, navController: NavController, displayAccountButton: Boolean = true) {
     TopAppBar(
         title = { Text(title) },
         actions = {
-            IconButton(onClick = {
-                navController.navigate("Account_Screen")
-            }) {
-                Icon(Icons.Filled.Person, null)
+            if (displayAccountButton) {
+                IconButton(onClick = {
+                    navController.navigate("Account_Screen")
+                }) {
+                    Icon(Icons.Filled.Person, null)
+                }
             }
         }
     )
+
 }

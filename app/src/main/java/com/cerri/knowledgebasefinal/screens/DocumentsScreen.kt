@@ -40,11 +40,15 @@ fun DocumentsScreen(
                 alignment = Alignment.CenterVertically
             ),
         ) {
-            Text(text = "Techgenix", fontSize = 32.sp)
+            Text(
+                modifier = Modifier.padding(start = 32.dp, end = 32.dp),
+                text = "Techgenix",
+                fontSize = 32.sp
+            )
             Text(
                 text = "Welcome to our knowledge base, please select a document below.",
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
             )
             DocumentList(documents = getDocuments)
         }

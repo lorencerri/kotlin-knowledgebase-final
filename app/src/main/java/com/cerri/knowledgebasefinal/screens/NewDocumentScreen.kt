@@ -100,7 +100,7 @@ fun NewDocumentScreen(
                     }
 
                 }) {
-                    Text("New Document")
+                    Text("Create")
                 }
             }
 

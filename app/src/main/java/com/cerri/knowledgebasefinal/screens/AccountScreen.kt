@@ -46,7 +46,7 @@ fun AccountScreen(
 
     if (userVal == null) LoadingIndicator()
     else {
-        Scaffold(topBar = { Header("Account", navController) }) {
+        Scaffold(topBar = { Header("Account", navController, displayAccountButton = false) }) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -57,8 +57,15 @@ fun AccountScreen(
                     alignment = Alignment.CenterVertically
                 ),
             ) {
-                Text("Hello, ${userVal?.username}!", fontSize = 32.sp)
-                Text("You can change your personal information below.")
+                Text(
+                    modifier = Modifier.padding(start = 32.dp, end = 32.dp),
+                    text = "Hello, ${userVal?.username}!",
+                    fontSize = 32.sp
+                )
+                Text(
+                    modifier = Modifier.padding(start = 32.dp, end = 32.dp),
+                    text = "You can change your personal information below."
+                )
             }
 
 
