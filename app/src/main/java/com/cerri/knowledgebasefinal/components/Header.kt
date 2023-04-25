@@ -15,7 +15,7 @@ fun Header(title: String, navController: NavController) {
         title = { Text(title) },
         actions = {
             IconButton(onClick = {
-                navController.navigate("Sign_Up_Screen")
+                navController.navigate("Account_Screen")
             }) {
                 Icon(Icons.Filled.Person, null)
             }

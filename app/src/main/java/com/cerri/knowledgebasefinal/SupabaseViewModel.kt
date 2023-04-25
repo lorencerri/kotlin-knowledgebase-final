@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 open class SupabaseViewModel : ViewModel() {
     val documents = mutableStateOf<List<Document>>(emptyList())
-    private val client: SupabaseClient = getClient()
+    val client: SupabaseClient = getClient()
 
     init {
         getDocuments()
