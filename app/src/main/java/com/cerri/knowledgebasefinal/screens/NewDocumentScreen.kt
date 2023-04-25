@@ -1,13 +1,8 @@
 package com.cerri.knowledgebasefinal.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.cerri.knowledgebasefinal.SupabaseViewModel
@@ -41,7 +37,23 @@ fun NewDocumentScreen(
         mutableStateOf(TextFieldValue("", TextRange(0, 7)))
     }
 
-    Scaffold(topBar = { Header("Add Document") }) {
+    Scaffold(topBar = { Header("New Document") }) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 16.dp,
+                alignment = Alignment.CenterVertically
+            ),
+        ) {
+            Text("Hello!", fontSize = 32.sp)
+            Text("Please enter the details of your new document below.")
+        }
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -52,34 +64,48 @@ fun NewDocumentScreen(
             ),
         ) {
 
-            TextField(
+
+            OutlinedTextField(
                 value = titleVal,
                 onValueChange = { titleVal = it },
                 label = { Text("Title") }
             )
 
-            TextField(
+            OutlinedTextField(
                 value = descriptionVal,
                 onValueChange = { descriptionVal = it },
                 label = { Text("Description") }
             )
 
-            Button(onClick = {
-                val scope = MainScope()
-
-                scope.launch {
-                    coroutineScope {
-                        supabaseViewModel.createDocument(
-                            title = titleVal.text,
-                            description = descriptionVal.text
-                        )
-                        navController.navigate("Documents_Screen")
-                    }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                TextButton(onClick = {
+                    navController.navigate("Documents_Screen")
+                }) {
+                    Text("Back")
                 }
 
-            }) {
-                Text("Add Document")
+                Button(onClick = {
+                    val scope = MainScope()
+
+                    scope.launch {
+                        coroutineScope {
+                            supabaseViewModel.createDocument(
+                                title = titleVal.text,
+                                description = descriptionVal.text
+                            )
+                            navController.navigate("Documents_Screen")
+                        }
+                    }
+
+                }) {
+                    Text("New Document")
+                }
             }
+
+
         }
     }
 }
