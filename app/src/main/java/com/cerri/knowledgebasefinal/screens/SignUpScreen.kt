@@ -47,7 +47,10 @@ fun SignUpScreen(
 
     val scaffoldState = rememberScaffoldState()
 
-    Scaffold(topBar = { Header("Sign Up", navController) }, scaffoldState = scaffoldState) {
+    Scaffold(
+        topBar = { Header("Sign Up", navController) },
+        scaffoldState = scaffoldState
+    ) {
 
         Column(
             modifier = Modifier

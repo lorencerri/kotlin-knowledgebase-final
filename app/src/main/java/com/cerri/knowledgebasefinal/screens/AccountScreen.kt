@@ -46,7 +46,13 @@ fun AccountScreen(
 
     if (userVal == null) LoadingIndicator()
     else {
-        Scaffold(topBar = { Header("Account", navController, displayAccountButton = false) }) {
+        Scaffold(topBar = {
+            Header(
+                "Account",
+                navController,
+                displayAccountButton = false,
+            )
+        }) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

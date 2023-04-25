@@ -50,7 +50,7 @@ fun DocumentsScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
             )
-            DocumentList(documents = getDocuments)
+            DocumentList(documents = getDocuments, navController = navController)
         }
 
 

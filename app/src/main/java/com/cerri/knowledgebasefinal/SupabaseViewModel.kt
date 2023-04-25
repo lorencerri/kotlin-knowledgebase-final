@@ -53,6 +53,20 @@ open class SupabaseViewModel : ViewModel() {
         )
     }
 
+    suspend fun getDocument(documentId: String): Document? {
+        Log.d("SupabaseViewModel", documentId)
+        runCatching {
+            val response = client.postgrest["documents"].select(single = true) {
+                Document::id eq documentId
+            }
+            return response.decodeAs()
+        }.onFailure {
+            it.printStackTrace()
+            return null
+        }
+        return null
+    }
+
 
     private fun getDocuments() {
         viewModelScope.launch {

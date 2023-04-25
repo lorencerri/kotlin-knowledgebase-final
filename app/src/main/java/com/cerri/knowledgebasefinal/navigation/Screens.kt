@@ -6,5 +6,5 @@ sealed class Screens(val route: String) {
     object AccountScreen : Screens(route = "Account_Screen")
     object SignUpScreen : Screens(route = "Sign_Up_Screen")
     object SignInScreen : Screens(route = "Sign_In_Screen")
-    object DocumentScreen : Screens(route = "Document_Screen")
+    object DocumentScreen : Screens(route = "Document_Screen?documentId={documentId}")
 }
