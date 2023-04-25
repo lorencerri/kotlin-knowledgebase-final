@@ -12,9 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.cerri.knowledgebasefinal.SupabaseViewModel
+import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.components.ActionButton
 import com.cerri.knowledgebasefinal.components.DocumentList
 import com.cerri.knowledgebasefinal.components.Header
@@ -23,12 +22,12 @@ import com.cerri.knowledgebasefinal.components.Header
 @Composable
 fun DocumentsScreen(
     navController: NavController,
-    supabaseViewModel: SupabaseViewModel = viewModel()
+    applicationViewModel: ApplicationViewModel
 ) {
-    val getDocuments = supabaseViewModel.documents.value
+    val getDocuments = applicationViewModel.documents.value
 
     Scaffold(
-        topBar = { Header("Documents") },
+        topBar = { Header("Documents", navController) },
         floatingActionButton = { ActionButton(navController) }
     ) {
         Column(

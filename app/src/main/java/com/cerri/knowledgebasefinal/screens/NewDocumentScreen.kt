@@ -14,9 +14,8 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.cerri.knowledgebasefinal.SupabaseViewModel
+import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.components.Header
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.coroutineScope
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun NewDocumentScreen(
     navController: NavController,
-    supabaseViewModel: SupabaseViewModel = viewModel()
+    applicationViewModel: ApplicationViewModel
 ) {
 
     var titleVal by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -37,7 +36,7 @@ fun NewDocumentScreen(
         mutableStateOf(TextFieldValue("", TextRange(0, 7)))
     }
 
-    Scaffold(topBar = { Header("New Document") }) {
+    Scaffold(topBar = { Header("New Document", navController) }) {
 
         Column(
             modifier = Modifier
@@ -92,7 +91,7 @@ fun NewDocumentScreen(
 
                     scope.launch {
                         coroutineScope {
-                            supabaseViewModel.createDocument(
+                            applicationViewModel.createDocument(
                                 title = titleVal.text,
                                 description = descriptionVal.text
                             )

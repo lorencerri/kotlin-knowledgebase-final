@@ -1,16 +1,24 @@
 package com.cerri.knowledgebasefinal.components
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun Header(title: String) {
-    TopAppBar {
-        Text(title, Modifier.padding(8.dp), fontSize = 16.sp)
-    }
+fun Header(title: String, navController: NavController) {
+    TopAppBar(
+        title = { Text(title) },
+        actions = {
+            IconButton(onClick = {
+                navController.navigate("Sign_Up_Screen")
+            }) {
+                Icon(Icons.Filled.Person, null)
+            }
+        }
+    )
 }

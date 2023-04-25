@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.gotrue.GoTrue
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.realtime.Realtime
 import kotlinx.coroutines.launch
 
-class SupabaseViewModel : ViewModel() {
+open class SupabaseViewModel : ViewModel() {
     val documents = mutableStateOf<List<Document>>(emptyList())
     private val client: SupabaseClient = getClient()
 
@@ -50,5 +51,6 @@ private fun getClient(): SupabaseClient {
     ) {
         install(Postgrest)
         install(Realtime)
+        install(GoTrue)
     }
 }
