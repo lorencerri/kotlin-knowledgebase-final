@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -83,8 +84,10 @@ fun DocumentScreen(
                 Text(
                     text = document!!.description,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
+                    modifier = Modifier.padding(start = 32.dp, end = 32.dp)
                 )
+
+                Divider(modifier = Modifier.padding(24.dp))
 
             }
         }

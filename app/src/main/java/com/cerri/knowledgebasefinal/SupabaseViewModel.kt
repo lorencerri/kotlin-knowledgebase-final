@@ -92,10 +92,16 @@ open class SupabaseViewModel : ViewModel() {
 
     }
 
-    suspend fun editDocument(documentId: String, title: String, description: String) {
+    suspend fun editDocument(
+        documentId: String,
+        title: String,
+        description: String,
+        components: MutableList<Component>
+    ) {
         client.postgrest["documents"].update({
             Document::title setTo title
             Document::description setTo description
+            Document::components setTo components.filter { !it.deleted }.toMutableList()
         }) {
             Document::id eq documentId
         }
