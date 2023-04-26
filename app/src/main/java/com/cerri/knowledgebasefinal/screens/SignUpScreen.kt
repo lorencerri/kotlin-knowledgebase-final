@@ -48,7 +48,7 @@ fun SignUpScreen(
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
-        topBar = { Header("Sign Up", navController) },
+        topBar = { Header("Sign Up", navController, displayAccountButton = false, showBack = true) },
         scaffoldState = scaffoldState
     ) {
 
