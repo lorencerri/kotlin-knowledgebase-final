@@ -7,7 +7,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +28,7 @@ fun AccountScreen(
 ) {
 
     var usernameVal by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue("", TextRange(0, 7)))
+        mutableStateOf(TextFieldValue(""))
     }
 
     var userVal by remember { mutableStateOf<User?>(null) }
@@ -40,7 +39,7 @@ fun AccountScreen(
             navController.navigate("Sign_In_Screen")
         } else {
             userVal = user
-            usernameVal = TextFieldValue(user.username, TextRange(0, user.username.length))
+            usernameVal = TextFieldValue(user.username)
         }
     }
 

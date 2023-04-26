@@ -1,6 +1,5 @@
 package com.cerri.knowledgebasefinal.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -11,6 +10,7 @@ import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.screens.AccountScreen
 import com.cerri.knowledgebasefinal.screens.DocumentScreen
 import com.cerri.knowledgebasefinal.screens.DocumentsScreen
+import com.cerri.knowledgebasefinal.screens.EditDocumentScreen
 import com.cerri.knowledgebasefinal.screens.NewDocumentScreen
 import com.cerri.knowledgebasefinal.screens.SignInScreen
 import com.cerri.knowledgebasefinal.screens.SignUpScreen
@@ -44,8 +44,18 @@ fun NavigationGraph(
                 navArgument("documentId") { defaultValue = "" },
             )
         ) {
-            Log.d("NavigationGraph", it.arguments.toString())
             DocumentScreen(
+                navController,
+                applicationViewModel,
+                documentId = it.arguments?.getString("documentId") ?: "0"
+            )
+        }
+        composable(
+            route = Screens.EditDocumentScreen.route, arguments = listOf(
+                navArgument("documentId") { defaultValue = "" },
+            )
+        ) {
+            EditDocumentScreen(
                 navController,
                 applicationViewModel,
                 documentId = it.arguments?.getString("documentId") ?: "0"

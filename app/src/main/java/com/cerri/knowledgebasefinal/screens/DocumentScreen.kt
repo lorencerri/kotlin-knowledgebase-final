@@ -6,8 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,6 +47,16 @@ fun DocumentScreen(
     if (document == null) LoadingIndicator()
     else {
         Scaffold(
+            floatingActionButton = {
+                FloatingActionButton(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    onClick = {
+                        navController.navigate("Edit_Document_Screen?documentId=${documentId}")
+                    })
+                {
+                    Icon(Icons.Filled.Edit, "")
+                }
+            },
             topBar = { Header("Document", navController, showBack = true) },
         ) {
             Column(
