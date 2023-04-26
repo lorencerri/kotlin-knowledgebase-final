@@ -8,6 +8,7 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue
 import io.github.jan.supabase.gotrue.gotrue
+import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.realtime.Realtime
@@ -21,7 +22,7 @@ open class SupabaseViewModel : ViewModel() {
         getDocuments()
     }
 
-    suspend fun getUserOrNull(): User? {
+    suspend fun getUsernameOrNull(): String? {
         runCatching {
             client.gotrue.retrieveUserForCurrentSession()
         }.onFailure {
@@ -30,8 +31,18 @@ open class SupabaseViewModel : ViewModel() {
             val supabaseResponse = client.postgrest["users"].select(single = true) {
                 User::email eq it.email
             }
-            Log.d("SupabaseViewModel", supabaseResponse.toString())
-            return supabaseResponse.decodeAs<User>()
+            return supabaseResponse.decodeAs<User>().username
+        }
+        return null
+    }
+
+    suspend fun getUserOrNull(): UserInfo? {
+        runCatching {
+            client.gotrue.retrieveUserForCurrentSession()
+        }.onFailure {
+            return null
+        }.onSuccess {
+            return it
         }
         return null
     }

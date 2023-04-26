@@ -51,10 +51,13 @@ fun EditDocumentScreen(
     }
 
     LaunchedEffect("getUser") {
-        document = applicationViewModel.getDocument(documentId)
-        if (document == null) navController.navigate("Documents_Screen")
-        titleVal = TextFieldValue(document?.title ?: "")
-        descriptionVal = TextFieldValue(document?.description ?: "")
+        val user = applicationViewModel.getUserOrNull()
+        if (user != null) {
+            document = applicationViewModel.getDocument(documentId)
+            if (document == null) navController.navigate("Documents_Screen")
+            titleVal = TextFieldValue(document?.title ?: "")
+            descriptionVal = TextFieldValue(document?.description ?: "")
+        }
     }
 
 

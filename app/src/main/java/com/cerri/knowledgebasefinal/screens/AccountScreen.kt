@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.cerri.knowledgebasefinal.ApplicationViewModel
-import com.cerri.knowledgebasefinal.User
 import com.cerri.knowledgebasefinal.components.Header
 import com.cerri.knowledgebasefinal.components.LoadingIndicator
 import io.github.jan.supabase.gotrue.gotrue
+import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -31,19 +31,19 @@ fun AccountScreen(
         mutableStateOf(TextFieldValue(""))
     }
 
-    var userVal by remember { mutableStateOf<User?>(null) }
+    var userInfoVal by remember { mutableStateOf<UserInfo?>(null) }
 
     LaunchedEffect("getUser") {
-        val user = applicationViewModel.getUserOrNull()
-        if (user == null) {
+        val username = applicationViewModel.getUsernameOrNull()
+        if (username == null) {
             navController.navigate("Sign_In_Screen")
         } else {
-            userVal = user
-            usernameVal = TextFieldValue(user.username)
+            usernameVal = TextFieldValue(username)
+            userInfoVal = applicationViewModel.getUserOrNull()
         }
     }
 
-    if (userVal == null) LoadingIndicator()
+    if (userInfoVal == null) LoadingIndicator()
     else {
         Scaffold(topBar = {
             Header(
@@ -64,12 +64,18 @@ fun AccountScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(start = 32.dp, end = 32.dp),
-                    text = "Hello, ${userVal?.username}!",
+                    text = "Hello, ${usernameVal.text}!",
                     fontSize = 32.sp
                 )
                 Text(
                     modifier = Modifier.padding(start = 32.dp, end = 32.dp),
                     text = "You can change your personal information below."
+                )
+                Text(
+                    modifier = Modifier.padding(start = 32.dp, end = 32.dp),
+                    text = "Your account was created on ${
+                        userInfoVal?.createdAt.toString().split("T")[0]
+                    }."
                 )
             }
 

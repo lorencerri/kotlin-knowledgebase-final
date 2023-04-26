@@ -1,7 +1,6 @@
 package com.cerri.knowledgebasefinal.screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,23 +37,30 @@ fun DocumentScreen(
     documentId: String
 ) {
     var document by remember { mutableStateOf<Document?>(null) }
-    LaunchedEffect("getUser") {
+    var isAuthor by remember { mutableStateOf(false) }
+
+    LaunchedEffect("getUserOnDocumentScreen") {
         document = applicationViewModel.getDocument(documentId)
         if (document == null) navController.navigate("Documents_Screen")
-        Log.d("DocumentScreen", "Document: $document")
+        val user = applicationViewModel.getUserOrNull()
+        if (user != null) {
+            if (document?.author_id == user.id) isAuthor = true
+        }
     }
 
     if (document == null) LoadingIndicator()
     else {
         Scaffold(
             floatingActionButton = {
-                FloatingActionButton(
-                    backgroundColor = MaterialTheme.colors.primary,
-                    onClick = {
-                        navController.navigate("Edit_Document_Screen?documentId=${documentId}")
-                    })
-                {
-                    Icon(Icons.Filled.Edit, "")
+                if (isAuthor) {
+                    FloatingActionButton(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        onClick = {
+                            navController.navigate("Edit_Document_Screen?documentId=${documentId}")
+                        })
+                    {
+                        Icon(Icons.Filled.Edit, "")
+                    }
                 }
             },
             topBar = { Header("Document", navController, showBack = true) },

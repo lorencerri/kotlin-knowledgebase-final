@@ -7,6 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -25,10 +30,16 @@ fun DocumentsScreen(
     applicationViewModel: ApplicationViewModel
 ) {
     val getDocuments = applicationViewModel.documents.value
+    var isLoggedIn by remember { mutableStateOf(false) }
+
+    LaunchedEffect("getUser") {
+        val user = applicationViewModel.getUserOrNull()
+        if (user != null) isLoggedIn = true
+    }
 
     Scaffold(
         topBar = { Header("Documents", navController) },
-        floatingActionButton = { ActionButton(navController) }
+        floatingActionButton = { if (isLoggedIn) ActionButton(navController) }
     ) {
         Column(
             modifier = Modifier
