@@ -79,7 +79,7 @@ open class SupabaseViewModel : ViewModel() {
     }
 
 
-    private fun getDocuments() {
+    fun getDocuments() {
         viewModelScope.launch {
             kotlin.runCatching {
                 val supabaseResponse = client.postgrest["documents"].select()
@@ -97,6 +97,12 @@ open class SupabaseViewModel : ViewModel() {
             Document::title setTo title
             Document::description setTo description
         }) {
+            Document::id eq documentId
+        }
+    }
+
+    suspend fun deleteDocument(documentId: String) {
+        client.postgrest["documents"].delete {
             Document::id eq documentId
         }
     }

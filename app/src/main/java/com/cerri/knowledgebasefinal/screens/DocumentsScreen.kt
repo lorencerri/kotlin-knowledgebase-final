@@ -33,6 +33,7 @@ fun DocumentsScreen(
     var isLoggedIn by remember { mutableStateOf(false) }
 
     LaunchedEffect("getUser") {
+        applicationViewModel.getDocuments()
         val user = applicationViewModel.getUserOrNull()
         if (user != null) isLoggedIn = true
     }

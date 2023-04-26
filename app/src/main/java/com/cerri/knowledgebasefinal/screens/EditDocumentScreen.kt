@@ -63,7 +63,7 @@ fun EditDocumentScreen(
 
     if (document == null) LoadingIndicator()
     else {
-        Scaffold(topBar = { Header("Edit Document", navController) }) {
+        Scaffold(topBar = { Header("Edit Document", navController, true) }) {
 
             Column(
                 modifier = Modifier
@@ -108,9 +108,16 @@ fun EditDocumentScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     TextButton(onClick = {
-                        navController.popBackStack()
+                        val scope = MainScope()
+
+                        scope.launch {
+                            coroutineScope {
+                                applicationViewModel.deleteDocument(documentId)
+                                navController.popBackStack()
+                            }
+                        }
                     }) {
-                        Text("Back")
+                        Text("Delete", color = androidx.compose.ui.graphics.Color.Red)
                     }
 
                     Button(onClick = {
