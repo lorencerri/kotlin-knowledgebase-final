@@ -85,7 +85,7 @@ fun EditDocumentScreen(
                 text = { Text("Add Component") },
                 backgroundColor = MaterialTheme.colors.primary,
             )
-        }, topBar = { Header("Edit Document", navController, true) }) {
+        }, topBar = { Header("Edit Document", navController, true, true) }) {
 
             Column(
                 modifier = Modifier
@@ -99,96 +99,97 @@ fun EditDocumentScreen(
             ) {
                 Text("Hello!", fontSize = 32.sp)
                 Text("Please edit the details of your document below.")
-            }
 
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 16.dp,
-                    alignment = Alignment.CenterVertically
-                ),
-            ) {
-
-
-                OutlinedTextField(
-                    value = titleVal,
-                    onValueChange = { titleVal = it },
-                    label = { Text("Title") }
-                )
-
-                OutlinedTextField(
-                    value = descriptionVal,
-                    onValueChange = { descriptionVal = it },
-                    label = { Text("Description") }
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    TextButton(onClick = {
-                        val scope = MainScope()
-
-                        scope.launch {
-                            coroutineScope {
-                                applicationViewModel.deleteDocument(documentId)
-                                navController.popBackStack()
-                            }
-                        }
-                    }) {
-                        Text("Delete", color = androidx.compose.ui.graphics.Color.Red)
-                    }
-
-                    Button(onClick = {
-                        val scope = MainScope()
-
-                        scope.launch {
-                            coroutineScope {
-                                applicationViewModel.editDocument(
-                                    documentId = documentId,
-                                    title = titleVal.text,
-                                    description = descriptionVal.text,
-                                    components = document!!.components
-                                )
-                                navController.popBackStack()
-                            }
-                        }
-
-                    }) {
-                        Text("Update")
-                    }
-
-                }
-
-                Divider(modifier = Modifier.padding(24.dp))
-
-                LazyColumn(
+                Column(
                     modifier = Modifier
-                        .padding(start = 16.dp, end = 16.dp),
+                        .fillMaxSize()
+                        .padding(bottom = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(
                         space = 16.dp,
                         alignment = Alignment.CenterVertically
-                    )
+                    ),
                 ) {
-                    items(componentCount, key = { it }) {
-                        Row(Modifier.animateItemPlacement()) {
-                            EditTextComponent(
-                                title = document!!.components[it].title,
-                                text = document!!.components[it].content,
-                                onTitleChange = { title: String ->
-                                    document!!.components[it].title = title
-                                },
-                                onTextChange = { text: String ->
-                                    document!!.components[it].content = text
-                                },
-                                onDelete = {
-                                    document!!.components[it].deleted = true
+
+
+                    OutlinedTextField(
+                        value = titleVal,
+                        onValueChange = { titleVal = it },
+                        label = { Text("Title") }
+                    )
+
+                    OutlinedTextField(
+                        value = descriptionVal,
+                        onValueChange = { descriptionVal = it },
+                        label = { Text("Description") }
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        TextButton(onClick = {
+                            val scope = MainScope()
+
+                            scope.launch {
+                                coroutineScope {
+                                    applicationViewModel.deleteDocument(documentId)
+                                    navController.popBackStack()
                                 }
-                            )
+                            }
+                        }) {
+                            Text("Delete", color = androidx.compose.ui.graphics.Color.Red)
+                        }
+
+                        Button(onClick = {
+                            val scope = MainScope()
+
+                            scope.launch {
+                                coroutineScope {
+                                    applicationViewModel.editDocument(
+                                        documentId = documentId,
+                                        title = titleVal.text,
+                                        description = descriptionVal.text,
+                                        components = document!!.components
+                                    )
+                                    navController.popBackStack()
+                                }
+                            }
+
+                        }) {
+                            Text("Update")
+                        }
+
+                    }
+
+                    Divider(modifier = Modifier.padding(24.dp))
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(
+                            space = 16.dp,
+                            alignment = Alignment.CenterVertically
+                        )
+                    ) {
+                        items(componentCount, key = { it }) {
+                            Row(Modifier.animateItemPlacement()) {
+                                EditTextComponent(
+                                    title = document!!.components[it].title,
+                                    text = document!!.components[it].content,
+                                    onTitleChange = { title: String ->
+                                        document!!.components[it].title = title
+                                    },
+                                    onTextChange = { text: String ->
+                                        document!!.components[it].content = text
+                                    },
+                                    onDelete = {
+                                        document!!.components[it].deleted = true
+                                    }
+                                )
+                            }
                         }
                     }
                 }

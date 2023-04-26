@@ -1,10 +1,13 @@
 package com.cerri.knowledgebasefinal.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -29,7 +32,9 @@ import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.Document
 import com.cerri.knowledgebasefinal.components.Header
 import com.cerri.knowledgebasefinal.components.LoadingIndicator
+import com.cerri.knowledgebasefinal.components.TextComponent
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @Composable
 fun DocumentScreen(
@@ -88,6 +93,26 @@ fun DocumentScreen(
                 )
 
                 Divider(modifier = Modifier.padding(24.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = 16.dp,
+                        alignment = Alignment.CenterVertically
+                    )
+                ) {
+                    items(document!!.components.size, key = { it }) {
+                        Row(Modifier.animateItemPlacement()) {
+                            TextComponent(
+                                title = document!!.components[it].title,
+                                text = document!!.components[it].content,
+                                clickable = { }
+                            )
+                        }
+                    }
+                }
 
             }
         }
