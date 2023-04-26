@@ -49,7 +49,6 @@ fun DocumentsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
                 space = 16.dp,
-                alignment = Alignment.CenterVertically
             ),
         ) {
             Text(
@@ -60,8 +59,9 @@ fun DocumentsScreen(
             Text(
                 text = "Welcome to our knowledge base, please select a document below.",
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp, start = 32.dp, end = 32.dp)
+                modifier = Modifier.padding(start = 32.dp, end = 32.dp)
             )
+            Divider(modifier = Modifier.padding(24.dp))
             DocumentList(documents = getDocuments, navController = navController)
         }
 

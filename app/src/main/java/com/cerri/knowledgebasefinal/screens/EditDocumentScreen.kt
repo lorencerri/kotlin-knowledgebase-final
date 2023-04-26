@@ -29,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.cerri.knowledgebasefinal.ApplicationViewModel
 import com.cerri.knowledgebasefinal.Component
@@ -97,8 +96,7 @@ fun EditDocumentScreen(
                     alignment = Alignment.CenterVertically
                 ),
             ) {
-                Text("Hello!", fontSize = 32.sp)
-                Text("Please edit the details of your document below.")
+                Text("You can edit the details of your document below.")
 
 
                 Column(

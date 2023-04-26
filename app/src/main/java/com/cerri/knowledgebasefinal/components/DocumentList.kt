@@ -23,7 +23,6 @@ fun DocumentList(documents: List<Document>, navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(
             space = 16.dp,
-            alignment = Alignment.CenterVertically
         )
     ) {
         items(documents.size, key = { it }) {

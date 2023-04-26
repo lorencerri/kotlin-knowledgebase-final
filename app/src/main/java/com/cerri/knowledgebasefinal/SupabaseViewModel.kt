@@ -11,6 +11,7 @@ import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Order
 import io.github.jan.supabase.realtime.Realtime
 import kotlinx.coroutines.launch
 
@@ -82,7 +83,9 @@ open class SupabaseViewModel : ViewModel() {
     fun getDocuments() {
         viewModelScope.launch {
             kotlin.runCatching {
-                val supabaseResponse = client.postgrest["documents"].select()
+                val supabaseResponse = client.postgrest["documents"].select {
+                    order(column = "created_at", order = Order.ASCENDING, nullsFirst = false)
+                }
                 documents.value = supabaseResponse.decodeList()
             }.onFailure {
                 it.printStackTrace()
