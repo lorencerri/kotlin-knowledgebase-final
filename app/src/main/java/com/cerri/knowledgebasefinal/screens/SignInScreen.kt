@@ -48,7 +48,6 @@ fun SignInScreen(
                 "Sign In",
                 navController,
                 displayAccountButton = false,
-                showBack = true
             )
         },
         scaffoldState = scaffoldState
